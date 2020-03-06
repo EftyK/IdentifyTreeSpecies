@@ -22,8 +22,24 @@ In our case the file is called labelmap.pbtxt and can be found under 'training' 
 ## Prerequisites
 To build a Tensorflow object detection model, you must have the following prerequisites installed on your system:
 1. Environment with Python > 3.6.10.
-2. The following 4 commands will install almost all packages that you will need:
+2. The following commands will install almost all packages that you will need:
 ```Bash
 pip install tensorflow==1.15.2
 pip install pandas
+```
+3. Download or git clone [this](https://github.com/tensorflow/models) repository.
+
+The instructions above should end in acquiring locally the tree-structured project directories of Tensorflow. \
+Example: \
+-models \
+&nbsp;&nbsp;&nbsp;&nbsp;-research \
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; -object_detection \
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;... \
+&nbsp;&nbsp;&nbsp;&nbsp; ...
+
+4. Navigate to models/research directory and run
+```Bash
+pip install .
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 ```
