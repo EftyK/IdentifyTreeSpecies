@@ -45,7 +45,7 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 ```
 ## How to use this project
 
-1. Download or git clone the repository and copy it under object_detection. Now your file structure should be: \
+1. Download or git clone the repository and copy 'CNNTraining' under object_detection. Now your file structure should be: \
 -models \
 &nbsp;&nbsp;&nbsp;&nbsp;-research \
 &nbsp;&nbsp;&nbsp;&nbsp;
