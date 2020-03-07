@@ -46,7 +46,7 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 ```
 ## How to use this project
 
-1. Download or git clone the repository and copy 'CNNTraining' under object_detection. Now your file structure should be: \
+1. Download or git clone the repository and copy it under object_detection. Now your file structure should be: \
 -models \
 &nbsp;&nbsp;&nbsp;&nbsp;-research \
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -57,29 +57,49 @@ export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 &nbsp;&nbsp;&nbsp;&nbsp; ...
 
 
-1. Navigate to models/research/object_detection/CNNTraining and run
+2. Navigate to models/research/object_detection/CNNTraining and run
 ```Bash
 python xml_to_csv.py
 ```
-This will create 2 new csv files under images/ that are combine all the xml files that have been created for each image. Note that you get separate files for training and testing the CNN.
-You can skip this step by using the ready csv files provided by this repo. (just copy and paste them under images)
+This will create 2 .csv files under 'images' that combine all the .xml files that correspond to every image. Note that you get separate files for training and testing the CNN.
+You can skip this step by using the .csv files provided in 'time_saver' folder. Just copy and paste train_labels.csv and test_labels.csv directly under 'images'.
 
-2. 
+2. Now we have to turn the .csv files into a format that can be manipulated by Tensorflow. Under CNNTraining, run: 
 ```Bash
 python generate_tfrecords.py --csv_input=images/train_labels.csv --image_dir=images/train --output_path=train.record
 
 python generate_tfrecords.py --csv_input=images/test_labels.csv --image_dir=images/test --output_path=test.record
 ```
-This process turns csv files into a format that can be manipulated by tensorflow. Just copy-paste to go further. OR copy-paste and proceed to step 3.
+were:
+* csv_input: the path to the .csv file
+* image_dir: the path to the directory that contains the images we will use for building the model.
+* output_path: the path to the new .record file that will be created.
+
+You can skip this step by using the .record files provided in 'time_saver' folder. Just copy and paste train.record and test.record directly under CNNTraining.
  
- 
-3. Navigate to object_detection
+3. Navigate to models/research/object_detection directory. If all the previous steps have been followed closely, it is enough to run:
 ```Bash
-cd ..
 python model_main.py --logtostderr --model_dir=CNNTraining/training/ --pipeline_config_path=CNNTraining/training/faster_rcnn_inception_v2_pets.config
 ```
+and watch the model being built.
 
-4. check tensorboard to stop the process
- 
-5. note the checkpoint before exporting the inference graph
- python export_inference_graph.py --input_type image_tensor --pipeline_config_path prj_training/faster_rcnn_inception_v2_pets.config --trained_checkpoint_prefix prj_training/model.ckpt-3699 --output_directory inference_graph
+4. You can stop the training with CTRL+C when you are satisfied the loss achieved. The loss can be monitored either by checking the console output:
+![Console output](doc_imgs/console_output.png)
+*Fig. 1 - Console output*
+
+or by checking TensorBoard. TensorBoard is Tensorflow's tool for visualizing metrics such as loss and accuracy. It can be activated by navigating to CNNTraining directory and running
+```Bash
+tensorboard --logdir=training
+```
+where logdir is the directory whose activity we want to log. 
+
+Then, you can simply open a browser window to [localhost:6006](localhost:6006) and check the model's histograms, graphs, etc.
+![Tensorboard](doc_imgs/tensorboard.png)
+*Fig. 1 - Tensorboard output*
+
+5. The last step is to export the inference graph. Under 'training' you should be able to see files of the format model.ckpt-XXXX.index, where XXXX stands for the number of the checkpoint. Note down these 4 digits and navigate to models/research/object_detection and run the following command, after replacing 'XXXX' accordingly:
+
+```Bash
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path CNNTraining/training/faster_rcnn_inception_v2_pets.config --trained_checkpoint_prefix CNNTraining/training/model.ckpt-XXXX --output_directory CNNTraining/inference_graph
+```
+You can notice a new folder under 'CNNTraining' called 'inference_graph'. That folder contains your trained model.
