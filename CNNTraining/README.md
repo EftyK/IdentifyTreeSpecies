@@ -96,7 +96,8 @@ where logdir is the directory whose activity we want to log.
 
 Then, you can simply open a browser window to [localhost:6006](localhost:6006) and check the model's histograms, graphs, etc.
 ![Tensorboard](doc_imgs/tensorboard.png)
-*Fig. 1 - Tensorboard output*
+
+*Fig. 2 - Tensorboard output*
 
 5. The last step is to export the inference graph. Under 'training' you should be able to see files of the format model.ckpt-XXXX.index, where XXXX stands for the number of the checkpoint. Note down these 4 digits and navigate to models/research/object_detection and run the following command, after replacing 'XXXX' accordingly:
 
