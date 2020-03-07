@@ -9,6 +9,7 @@ In order to create a CNN using Tensorflow's object_detection API, you need (and 
 These .jpg files can be found under 'images' and are further separated in 'train' and 'test' folders.
 2. An **.xml file** for each of the abovementioned images, which contain the data for locating the objects of interest within the images.
 These files can be found in the same folder as their respective .jpg image.
+See [information](https://github.com/BrimKing/LabelImgTreeSpecies/blob/master/README.md) on how to create such files using [labelImg](https://github.com/tzutalin/labelImg).
 3. A **labelmap**, that contains the list of classes of the objects of interest.
 In our case the file is called labelmap.pbtxt and can be found under 'training' folder. It contains only 2 classes, Platanus_x_hispanica and Celtis_australis.
 4. A **.config file** that describes the pipeline of the CNN that is going to be used. In our case is called faster_rcnn_inception_v2_pets.config (as we are using Faster R-CNN architecture) and can be found under 'training'.
